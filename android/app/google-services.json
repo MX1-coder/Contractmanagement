@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "414657274359",
+    "project_id": "responsiveapp-f235f",
+    "storage_bucket": "responsiveapp-f235f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414657274359:android:f3ba51be24a3d7484c4ef2",
+        "android_client_info": {
+          "package_name": "com.example.home_page"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414657274359-30e9gcagub7oe53egbheu8j1mm1f8jru.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIWWUWVbpfB5ASNqml8TVrxI72_EPsgK0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414657274359-30e9gcagub7oe53egbheu8j1mm1f8jru.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

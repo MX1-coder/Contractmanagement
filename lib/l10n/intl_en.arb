@@ -1,0 +1,24 @@
+{
+  "language": "English",
+  "@language": {
+    "description": "The current language"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "A word"
+  },
+  "home": "HOME",
+  "contract": "CONTRACT",
+  "productinfo": "PRODUCT INFO",
+  "downloads": "DOWNLOADS",
+  "contact": "CONTACT",
+  "freetrial": "Free Trial",
+  "whycontract": "Why Contract",
+  "contractbenefits": "Contract Benefits",
+  "cost": "Cost",
+  "ourcomprehensive": "Our Comprehensive",
+  "management": "Management",
+  "softwarehelps": "Software Helps",
+  "help": "Helps",
+  "readmore": "Read More"
+}
