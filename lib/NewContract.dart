@@ -170,8 +170,11 @@ class NewWeb extends StatefulWidget {
 }
 
 class _NewWebState extends State<NewWeb> {
-  TextEditingController _nameController=new TextEditingController();
-  TextEditingController _ageController=new TextEditingController();
+  TextEditingController title=new TextEditingController();
+  TextEditingController description=new TextEditingController();
+  TextEditingController requesterName=new TextEditingController();
+  TextEditingController amnt=new TextEditingController();
+  TextEditingController noticeperiod=new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey();
 
@@ -179,19 +182,33 @@ class _NewWebState extends State<NewWeb> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController();
-    _ageController = TextEditingController();
+    title = TextEditingController();
+    description = TextEditingController();
+    requesterName=TextEditingController();
+    amnt=TextEditingController();
+    noticeperiod=TextEditingController();
+   // dropdownvalue=contType;
   }
   @override
   void dispose() {
     super.dispose();
-    _nameController.dispose();
-    _ageController.dispose();
+    title.dispose();
+    description.dispose();
+    requesterName.dispose();
+    amnt.dispose();
+    noticeperiod.dispose();
+   // dropdownvalue.dispose();
   }
 
   final firestore=FirebaseFirestore.instance.collection('newcontract');
 
-  var value="-1";
+  var contType="xyz";
+  var reqstDept="CS";
+  var countName="Soumya";
+  var countCont="Tina Swift";
+  var contEffDate="On Execution";
+  var contEndDate="1 April";
+  var tax="All Tax Included";
   SingingCharacter? _character = SingingCharacter.Definite;
 
   @override
@@ -305,7 +322,33 @@ class _NewWebState extends State<NewWeb> {
                          padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                          child: Text('Save and Continue'),
                        )),
-                   onPressed: (){},
+                   onPressed: (){
+                       FocusScope.of(context).unfocus();
+                          if(_formKey.currentState!.validate()){
+                         String id=DateTime.now().millisecondsSinceEpoch.toString();
+                            firestore.doc().set({
+                              'contType':contType,
+                           'title' : title.text.toString(),
+                            'description' : description.text.toString(),
+                              'requesterName': requesterName.text.toString(),
+                              'reqstDept':reqstDept,
+                              'countName':countName,
+                              'countCont':countCont,
+                             // 'contTerm': _character,
+                              'contEffDate':contEffDate,
+                              'contEndDate':contEndDate,
+                              'noticePeriod':noticeperiod.text.toString(),
+                              'Amount':amnt.text.toString(),
+                              'Tax':tax,
+                               'id':id,
+
+                             }).then((value) {
+
+                            }).onError((error, stackTrace) {
+
+
+                       });}
+                   },
                  ),
 
                ],
@@ -340,6 +383,7 @@ class _NewWebState extends State<NewWeb> {
               Padding(
                 padding: const EdgeInsets.only(top: 150,left: 90),
                 child: Form(
+                  key: _formKey,
                     child: Column(
                       children: [
                         Stack(
@@ -359,22 +403,26 @@ class _NewWebState extends State<NewWeb> {
                                 child: SizedBox(
                                   height: 50,
                                   width: 400,
-                                  child: DropdownButtonFormField(
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
+                                  child:
+                                  DropdownButtonFormField(
 
+                                      decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+
+                                          ),
+                                          hintText: 'Select '
                                       ),
-                                      hintText: 'Select '
-                                    ),
-                                   // hint: Text('Select'),
-                                    value: value,
+                                      // hint: Text('Select'),
+                                      value: contType,
                                       items: [
-                                        DropdownMenuItem(child: Text('xyz'),value: "-1",),
-                                        DropdownMenuItem(child: Text('rwh'),value: "1",),
-                                        DropdownMenuItem(child: Text('dfgb'),value: "2",),
+                                        DropdownMenuItem(child: Text('xyz'),value: "xyz",),
+                                        DropdownMenuItem(child: Text('rwh'),value: "rwh",),
+                                        DropdownMenuItem(child: Text('dfgb'),value: "dfgb",),
                                       ],
 
-                                      onChanged: (v){}),
+                                      onChanged: ( v){
+                                        contType=v!;
+                                      }),
                                 ),
                               ),
 
@@ -403,6 +451,7 @@ class _NewWebState extends State<NewWeb> {
                                     ),
                                   ),
                                   child: TextField(
+                                    controller: title,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: 'E-Commerce Vendor Agreement',
@@ -438,6 +487,7 @@ class _NewWebState extends State<NewWeb> {
                                     ),
                                   ),
                                   child: TextField(
+                                    controller: description,
                                     decoration: InputDecoration(
                                         border: InputBorder.none
                                       //hintText: 'Description(Optional)',
@@ -476,6 +526,7 @@ class _NewWebState extends State<NewWeb> {
                                     ),
                                   ),
                                   child: TextField(
+                                    controller: requesterName,
                                     decoration: InputDecoration(
                                         border: InputBorder.none
                                       //hintText: 'Description(Optional)',
@@ -510,11 +561,11 @@ class _NewWebState extends State<NewWeb> {
                                         hintText: 'Select '
                                     ),
                                     // hint: Text('Select'),
-                                    value: value,
+                                    value: reqstDept,
                                     items: [
-                                      DropdownMenuItem(child: Text('xyz'),value: "-1",),
-                                      DropdownMenuItem(child: Text('rwh'),value: "1",),
-                                      DropdownMenuItem(child: Text('dfgb'),value: "2",),
+                                      DropdownMenuItem(child: Text('CS'),value: "CS",),
+                                      DropdownMenuItem(child: Text('EC'),value: "EC",),
+                                      DropdownMenuItem(child: Text('Science'),value: "Science",),
                                     ],
 
                                     onChanged: (v){}),
@@ -544,11 +595,11 @@ class _NewWebState extends State<NewWeb> {
                                         hintText: 'Select '
                                     ),
                                     // hint: Text('Select'),
-                                    value: value,
+                                    value: countName,
                                     items: [
-                                      DropdownMenuItem(child: Text('FOM Tech'),value: "-1",),
-                                      DropdownMenuItem(child: Text('rwh'),value: "1",),
-                                      DropdownMenuItem(child: Text('dfgb'),value: "2",),
+                                      DropdownMenuItem(child: Text('Soumya'),value: "Soumya"),
+                                      DropdownMenuItem(child: Text('Ram'),value: "Ram",),
+                                      DropdownMenuItem(child: Text('Avni'),value: "Avni",),
                                     ],
 
                                     onChanged: (v){}),
@@ -579,11 +630,11 @@ class _NewWebState extends State<NewWeb> {
                                         hintText: 'Select '
                                     ),
                                     // hint: Text('Select'),
-                                    value: value,
+                                    value: countCont,
                                     items: [
-                                      DropdownMenuItem(child: Text('Tina Swift'),value: "-1",),
-                                      DropdownMenuItem(child: Text('rwh'),value: "1",),
-                                      DropdownMenuItem(child: Text('dfgb'),value: "2",),
+                                      DropdownMenuItem(child: Text('Tina Swift'),value: "Tina Swift",),
+                                      DropdownMenuItem(child: Text('Tina'),value: "Tina",),
+                                      DropdownMenuItem(child: Text('Swift'),value: "Swift",),
                                     ],
 
                                     onChanged: (v){}),
@@ -649,10 +700,10 @@ class _NewWebState extends State<NewWeb> {
                                         hintText: 'Select '
                                     ),
                                     // hint: Text('Select'),
-                                    value: value,
+                                    value: contEffDate,
                                     items: [
-                                      DropdownMenuItem(child: Text('On Execution'),value: "-1",),
-                                      DropdownMenuItem(child: Text('rwh'),value: "1",),
+                                      DropdownMenuItem(child: Text('On Execution'),value: "On Execution",),
+                                      DropdownMenuItem(child: Text('Executing'),value: "Executing",),
                                       DropdownMenuItem(child: Text('dfgb'),value: "2",),
                                     ],
 
@@ -685,11 +736,11 @@ class _NewWebState extends State<NewWeb> {
                                         hintText: 'Select '
                                     ),
                                     // hint: Text('Select'),
-                                    value: value,
+                                    value: contEndDate,
                                     items: [
-                                      DropdownMenuItem(child: Text('Select'),value: "-1",),
-                                      DropdownMenuItem(child: Text('rwh'),value: "1",),
-                                      DropdownMenuItem(child: Text('dfgb'),value: "2",),
+                                      DropdownMenuItem(child: Text('Select'),value: "1 April",),
+                                      DropdownMenuItem(child: Text('15 April'),value: "15 April",),
+                                      DropdownMenuItem(child: Text('5 May'),value: "5 May",),
                                     ],
 
                                     onChanged: (v){}),
@@ -721,6 +772,7 @@ class _NewWebState extends State<NewWeb> {
                                     ),
                                   ),
                                   child: TextField(
+                                    controller: noticeperiod,
                                     decoration: InputDecoration(
                                         border: InputBorder.none
                                       //hintText: 'Description(Optional)',
@@ -778,6 +830,7 @@ class _NewWebState extends State<NewWeb> {
                                     ),
                                   ),
                                   child: TextField(
+                                    controller: amnt,
                                     decoration: InputDecoration(
                                         border: InputBorder.none
                                       //hintText: 'Description(Optional)',
@@ -813,11 +866,10 @@ class _NewWebState extends State<NewWeb> {
                                         hintText: 'Select '
                                     ),
                                     // hint: Text('Select'),
-                                    value: value,
+                                    value: tax,
                                     items: [
-                                      DropdownMenuItem(child: Text('All Tax Included'),value: "-1",),
-                                      DropdownMenuItem(child: Text('rwh'),value: "1",),
-                                      DropdownMenuItem(child: Text('dfgb'),value: "2",),
+                                      DropdownMenuItem(child: Text('All Tax Included'),value: "All Tax Included",),
+
                                     ],
 
                                     onChanged: (v){}),
@@ -974,7 +1026,7 @@ class _NewWebState extends State<NewWeb> {
   }
 
   addData() async {
-    String csvString = "${_nameController.text},${_ageController.text}";
+    String csvString = "${title.text},${description.text}";
     print(csvString);
     bool done = await addDataToCSV(csvString);
     SnackBar snackBar;
@@ -1034,4 +1086,6 @@ class _MediumChildState extends State<MediumChild> {
     return const Placeholder();
   }
 }
+
+
 
