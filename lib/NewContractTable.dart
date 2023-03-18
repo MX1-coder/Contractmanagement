@@ -9,10 +9,10 @@ class ContTable extends StatefulWidget {
 }
 
 class Record {
- // final String contType;
+  final String contType;
   final String title;
   final String description;
-  final String requesterName;
+ final String requesterName;
   final String reqstDept;
   final String countName;
   final String countCont;
@@ -24,10 +24,10 @@ class Record {
   final DocumentReference reference;
 
   Record.fromMap(Map<String, dynamic> map, {required this.reference})
-      : //assert(map['contType'] != null),
+      : assert(map['contType'] != null),
         assert(map['title'] != null),
         assert(map['description'] != null),
-        assert(map['requesterName'] != null),
+       assert(map['requesterName'] != null),
         assert(map['reqstDept'] != null),
         assert(map['countName'] != null),
         assert(map['countCont'] != null),
@@ -36,7 +36,7 @@ class Record {
         assert(map['noticePeriod'] != null),
         assert(map['Amount'] != null),
         assert(map['Tax'] != null),
-       // contType = map['contType'],
+        contType = map['contType'],
         title = map['title'],
         description = map['description'],
         requesterName = map['requesterName'],
@@ -52,14 +52,15 @@ class Record {
  Record.fromSnapshot(DocumentSnapshot snapshot) : this.fromMap((snapshot.data()) as Map<String, dynamic> , reference: snapshot.reference);
 
   @override
-  String toString() => "Record<$title:$description:$requesterName:$reqstDept:$countName:$countCont:$contEffDate:$contEndDate:$noticePeriod:$Amount:$Tax>";
+  String toString() => "Record<$contType:$title:$description:$reqstDept:$requesterName:$countName:$countCont:$contEffDate:$contEndDate:$noticePeriod:$Amount:$Tax>";
+ // String toString() => "Record<$title:$description:$contType>";
 }
 
 class _ContTableState extends State<ContTable> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(' Votes')),
+      appBar: AppBar(title: Text(' New Contracts')),
       body: _buildBody(context),
     );
   }
@@ -72,19 +73,33 @@ class _ContTableState extends State<ContTable> {
           return LinearProgressIndicator();
         }else if(snapshot.hasError){ const Text('No data avaible right now'); }
         return DataTable(
+            columnSpacing: 5,
             columns: [
-             // DataColumn(label: Text('Contract Type')),
+             DataColumn(label: Text('Contract Type')),
+              DataColumn(label: VerticalDivider()),
               DataColumn(label: Text('Title')),
+              DataColumn(label: VerticalDivider()),
               DataColumn(label: Text('Description')),
+              DataColumn(label: VerticalDivider()),
               DataColumn(label: Text('Requester Name')),
+              DataColumn(label: VerticalDivider()),
               DataColumn(label: Text('Requester Dept')),
+              DataColumn(label: VerticalDivider()),
               DataColumn(label: Text('Counterparty Name')),
+              DataColumn(label: VerticalDivider()),
               DataColumn(label: Text('Counterparty Contract')),
+              DataColumn(label: VerticalDivider()),
               DataColumn(label: Text('Contract Effective Date')),
+              DataColumn(label: VerticalDivider()),
               DataColumn(label: Text('Contract End Date')),
+              DataColumn(label: VerticalDivider()),
+              DataColumn(label: Text('Notice Period')),
+              DataColumn(label: VerticalDivider()),
               DataColumn(label: Text('Amount')),
+              DataColumn(label: VerticalDivider()),
               DataColumn(label: Text('Tax')),
-              //DataColumn(label: Text('Contract End Date')),
+              DataColumn(label: VerticalDivider()),
+
 
             ],
             rows: _buildList(context, snapshot.data!.docs)
@@ -106,18 +121,30 @@ class _ContTableState extends State<ContTable> {
     final record = Record.fromSnapshot(data);
 
     return DataRow(cells: [
-    //  DataCell(Text(record.contType.toString())),
+      DataCell(Container(child: Text(record.contType))),
+      DataCell( VerticalDivider()),
       DataCell(Text(record.title)),
+      DataCell( VerticalDivider()),
       DataCell(Text(record.description.toString())),
-      DataCell(Text(record.requesterName.toString())),
+      DataCell( VerticalDivider()),
+     DataCell(Text(record.requesterName.toString())),
+      DataCell( VerticalDivider()),
       DataCell(Text(record.reqstDept)),
+      DataCell( VerticalDivider()),
       DataCell(Text(record.countName)),
+      DataCell( VerticalDivider()),
       DataCell(Text(record.countCont)),
+      DataCell( VerticalDivider()),
       DataCell(Text(record.contEffDate)),
+      DataCell( VerticalDivider()),
       DataCell(Text(record.contEndDate)),
+      DataCell( VerticalDivider()),
       DataCell(Text(record.noticePeriod)),
+      DataCell( VerticalDivider()),
       DataCell(Text(record.Amount)),
+      DataCell( VerticalDivider()),
       DataCell(Text(record.Tax)),
+      DataCell( VerticalDivider()),
 
      // DataCell(Text(record.rName)),
     ]);
